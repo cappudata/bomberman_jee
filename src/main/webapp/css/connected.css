@@ -5,9 +5,11 @@
 .box {
 	font-family: 'Bedrock', sans-serif; 
 	position: relative;
-	top: 790px; right: 700px;
-	font-size: large;                                                                 
+	font-size: large; 
+	width : 50%;  
+	margin-top : 34%;                                                              
 }
+
 
  body {
 	 vertical-align: middle;

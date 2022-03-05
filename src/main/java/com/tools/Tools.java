@@ -1,5 +1,14 @@
 package com.tools;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +17,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.Part;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.beans.Game;
 import com.beans.Utilisateur;
@@ -63,7 +79,7 @@ public class Tools {
 	                String status = resultat.getString("status");
 	                int nbr_player = resultat.getInt("nbr_player");
 
-	                Game game = new Game(idgame, username, status, nbr_player);
+	                Game game = new Game();
 	                games.add(game);
 	            }
 	        } catch (SQLException e) {
@@ -121,7 +137,7 @@ public class Tools {
 	        }
 
 	        try {
-	            connexion = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bomberman_jee", "root", "");
+	            connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/bomberman_jee", "ArisLord", "Luz10Empire1197");
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -165,4 +181,100 @@ public class Tools {
 			return false;
 		}
 	
+		public static String HashPassword(String password) {
+			try {
+				   MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+				   
+				   messageDigest.update(password.getBytes());
+				   
+				   byte[] resultByteArray = messageDigest.digest();
+				   
+				   StringBuilder sb = new StringBuilder();
+				   
+				   for (byte b : resultByteArray) {
+				    sb.append(String.format("%02x", b));
+				   }
+				   
+				   return sb.toString();
+				   
+				  } catch (NoSuchAlgorithmException e) {
+				   e.printStackTrace();
+				  }
+				  
+				  return "";
+				 
+		}
+		public static List<Game> toListOfGame(JSONArray array){
+			List<Game> Games = new ArrayList<Game>();
+			
+			for(Object obj : array) {
+				JSONObject json = (JSONObject) obj;
+				long id = (long) json.get("idgame");
+				long nbrplayer = (long) json.get("nbrplayer");
+
+				Game game = new Game();
+				game.set_username((String)json.get("username"));
+				game.set_nbrplayer((int)nbrplayer);
+				game.set_idgame((int)id);
+				game.set_statusGame((String) json.get("gamestatus"));
+				
+				Games.add(game);				
+			}
+			
+			return Games;
+		}
+		
+		public static String getPostStatus(String body) {
+				String[] part = body.split(" ");
+	            String status = part[part.length-1];
+	            
+	            return status;
+		}
+		
+		 public static String getNomFichier( Part part ) {
+		        for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
+		            if ( contentDisposition.trim().startsWith( "filename" ) ) {
+		                return contentDisposition.substring( contentDisposition.indexOf( '=' ) + 1 ).trim().replace( "\"", "" );
+		            }
+		        }
+		        return null;
+		    }
+
+
+		public static void ecrireFichier(Part part, String nomFichier, String cheminFichiers,int TAILLE_TAMPON) {
+		       BufferedInputStream entree = null;
+		        BufferedOutputStream sortie = null;
+		        try {
+		            try {
+						entree = new BufferedInputStream(part.getInputStream(), TAILLE_TAMPON);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		            try {
+						sortie = new BufferedOutputStream(new FileOutputStream(new File(cheminFichiers + nomFichier)), TAILLE_TAMPON);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+		            byte[] tampon = new byte[TAILLE_TAMPON];
+		            int longueur;
+		            try {
+						while ((longueur = entree.read(tampon)) > 0) {
+						    sortie.write(tampon, 0, longueur);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        } finally {
+		            try {
+		                entree.close();
+		            } catch (IOException ignore) {
+		            }
+		        }
+			
+		}   
+		
 }

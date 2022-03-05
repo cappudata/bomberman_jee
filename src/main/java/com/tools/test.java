@@ -32,6 +32,7 @@ public class test {
 
 		
 		System.out.println( verifier("ArisLord", Usernames));
+		System.out.println( Tools.HashPassword("LuzEmpire10"));
 	
 	}
 

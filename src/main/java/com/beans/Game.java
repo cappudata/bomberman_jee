@@ -7,14 +7,7 @@ public class Game {
 	private int _nbrplayer;
 	
 
-	public Game (int idgame, String username, String statusGame, int nbrPlayer) {
-		this._idgame = idgame;
-		this._username = username;
-		this._statusGame = statusGame;
-		this._nbrplayer = nbrPlayer;
-	}
-	
-	
+
 	// Getter et Setter
 	public int get_idgame() {
 		return _idgame;
@@ -32,6 +25,10 @@ public class Game {
 		this._username = _username;
 	}
 	
+
+	public void set_statusGame(String _statusGame) {
+		this._statusGame = _statusGame;
+	}
 
 	public String  get_statusGame() {
 		return this._statusGame;

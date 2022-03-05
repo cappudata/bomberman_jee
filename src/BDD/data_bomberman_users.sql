@@ -4,7 +4,9 @@ DROP TABLE IF EXISTS users ;
 CREATE TABLE users (
     userid INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(32) NOT NULL, 
-    password VARCHAR(32) NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    mail VARCHAR(200),
+    profilepic VARCHAR(200),
     PRIMARY KEY (userid)
 ) ENGINE = INNODB;
 

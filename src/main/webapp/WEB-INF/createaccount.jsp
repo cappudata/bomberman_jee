@@ -32,10 +32,17 @@
 			<div class="wrap-login100">
 			
 				<form class="login100-form validate-form">
+					
+					
+					
 					<span class="login100-form-title">
 						Create your account
 					</span>
-
+					<c:if test="${ !empty erreur }">	
+						<div class="alert alert-danger" role="alert">
+							<c:out value="${ erreur }" />
+	 					 </div>	
+					</c:if>
 					<div class="wrap-input100 validate-input" data-validate = "Username is required">
 						<input class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>

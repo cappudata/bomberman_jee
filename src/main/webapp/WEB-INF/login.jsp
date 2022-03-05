@@ -37,7 +37,11 @@
 						Player Login
 					</span>
 				
-					
+					<c:if test="${ !empty erreur }">	
+						<div class="alert alert-danger" role="alert">
+							<c:out value="${ erreur }" />
+	 					 </div>	
+					</c:if>
 				
 					<div class="wrap-input100 validate-input" data-validate = "Username is required">
 						<input class="input100" type="text" name="username" placeholder="Username">
@@ -69,7 +73,7 @@
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="/Bomberman_JEE/createaccount">
+						<a class="txt2" href="createaccount">
 							Create your Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>

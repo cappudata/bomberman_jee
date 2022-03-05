@@ -1,0 +1,100 @@
+@charset "UTF-8";
+@import url('http://fonts.cdnfonts.com/css/bedrock');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:700');
+
+.parent {
+	
+	position : relative;
+}
+
+.parent > * {
+	padding-top : 50px;
+}
+
+.player-name{
+
+	border-bottom : 3px solid black;
+	font-size : 30px;
+	font-family : cursive;
+	font-weight : bold;
+}
+
+.modify{
+	height : 35px;
+	border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-family :cursive;
+    font-weight : bold;
+    text-align : center;
+    
+}
+
+
+.modify:before {
+	content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.modify:active {
+    color: #000
+}
+
+.modify:active:after {
+    background: transparent;
+}
+
+.modify:hover:before {
+    opacity: 1;
+}
+
+.modify:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.mail{
+	height : 35px;
+	border-radius:10px;
+	border-bottom : 2px solid black;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}

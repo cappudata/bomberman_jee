@@ -61,6 +61,7 @@
   	<servlet-mapping>
     	<servlet-name>MyAccount</servlet-name>
     	<url-pattern>/account</url-pattern>
+		
   	</servlet-mapping>
   
   

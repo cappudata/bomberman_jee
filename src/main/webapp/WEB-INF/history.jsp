@@ -14,8 +14,8 @@
 
 <div class="menu">
 	<ul>
-		<li><a href="/Bomberman_JEE/connected">Home</a></li>
-		<li><a href="/test1/bonjour">Store</a></li>
+		<li><a href="connected">Home</a></li>
+		<li><a href="bonjour">Store</a></li>
 	</ul>
 </div>
 

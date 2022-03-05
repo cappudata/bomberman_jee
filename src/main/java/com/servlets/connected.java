@@ -2,7 +2,7 @@ package com.servlets;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +27,10 @@ public class connected extends HttpServlet {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("username");
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/connected.jsp").forward(request, response);
+		if(username != null)
+			this.getServletContext().getRequestDispatcher("/WEB-INF/connected.jsp").forward(request, response);
+		else 
+			this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
