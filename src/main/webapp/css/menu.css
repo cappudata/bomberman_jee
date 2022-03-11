@@ -1,0 +1,87 @@
+@charset "UTF-8";
+@import url('http://fonts.cdnfonts.com/css/bedrock');
+
+body {
+	margin :0;
+}
+.nav_menu ul {
+	display: flex;
+	list-style-type: none;
+	justify-content: space-between;
+	background-color: #00715F;
+	height : 50px;
+}
+
+.nav_menu ul > li  {
+	
+	background-color: #088A40;
+	text-align:center;
+	width : 70%;
+	display :flex;
+	align-items:center;
+	justify-content : center;
+	margin-left :10%;
+	
+	border-bottom: 5px solid rgb(255,140,0);
+	border-radius: 10px;
+	
+}
+.menu_item{
+	font-weight : bold;
+	color: white;
+	font-family: 'Bedrock', sans-serif ;
+	font-size: 25px;
+}
+
+.nav_menu ul > li:hover {
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	
+}
+a:focus {
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+    color: #57b846;
+}
+a{
+	text-decoration: none;
+}
+
+.logo  {
+	width : 100%;
+	display : flex;
+	align-items:center;
+	justify-content: center;
+}
+
+.div_container {
+		background-color : #005F6D;
+		box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+
+.div_shop {
+	width : 80%;
+	margin : 5% auto;
+
+	/*box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;	*/
+}
+.product_card{
+	
+	width : 20%;
+	box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+	margin:5% auto;
+	border-radius : 5%;
+
+}
+.product_card > * {
+	width : 80%;
+	margin: 5% auto;
+}
+.product_name{
+	font-size:20px;
+	font-weight:bold;
+	
+}

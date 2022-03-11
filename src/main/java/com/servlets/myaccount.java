@@ -12,7 +12,7 @@ import javax.servlet.http.Part;
 
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
-import com.DAO.MysqlDao;
+import com.DAO.HTTPDao;
 import com.beans.Utilisateur;
 import com.tools.Tools;
 import com.tools.VerifierFormulaireInscription;
@@ -31,7 +31,7 @@ public class myaccount extends HttpServlet {
 	 public static final int TAILLE_TAMPON = 10240;
 	 public static final String CHEMIN_FICHIERS = "C:\\Users\\arist\\Documents\\Bomberman_JEE\\bomberman-with-vi\\src\\main\\webapp\\images\\";
 	
-    private MysqlDao mysqldao;   
+    private HTTPDao mysqldao;   
    
     public myaccount() {
         super();

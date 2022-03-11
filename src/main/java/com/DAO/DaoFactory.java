@@ -34,7 +34,7 @@ public class DaoFactory {
     }
 
     // R�cup�ration du Dao
-    public MysqlDao getMysqlDao() {
-        return new MysqlDao();
+    public HTTPDao getMysqlDao() {
+        return new HTTPDao();
     }
 }

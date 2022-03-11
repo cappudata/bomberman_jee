@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
-import com.DAO.MysqlDao;
+import com.DAO.HTTPDao;
 
 /**
  * Servlet implementation class acceuil
@@ -19,7 +19,7 @@ import com.DAO.MysqlDao;
 @WebServlet("/acceuil")
 public class login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private MysqlDao mysqldao;
+    private HTTPDao mysqldao;
   
     public login() {
         super();
@@ -33,6 +33,7 @@ public class login extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 

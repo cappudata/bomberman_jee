@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
-import com.DAO.MysqlDao;
+import com.DAO.HTTPDao;
 import com.beans.Utilisateur;
 
 public class VerifierFormulaireInscription {
@@ -23,7 +23,7 @@ public class VerifierFormulaireInscription {
 		String pass2 = request.getParameter("password2");
 		
 		DaoFactory daofactory = DaoFactory.getInstance();
-    	MysqlDao mysqldao = daofactory.getMysqlDao();
+    	HTTPDao mysqldao = daofactory.getMysqlDao();
     	
     	//verification que le nom soit libre
     	try {

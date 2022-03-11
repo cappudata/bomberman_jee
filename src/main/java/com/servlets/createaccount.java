@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
-import com.DAO.MysqlDao;
+import com.DAO.HTTPDao;
 import com.beans.Utilisateur;
 import com.tools.Tools;
 import com.tools.VerifierFormulaireInscription;
@@ -19,7 +19,7 @@ import com.tools.VerifierFormulaireInscription;
 @WebServlet("/createaccount")
 public class createaccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private MysqlDao mysqldao;   
+    private HTTPDao mysqldao;   
   
     public createaccount() {
         super();

@@ -14,49 +14,45 @@ import javax.servlet.http.HttpSession;
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
 import com.DAO.HTTPDao;
-import com.beans.Game;
+import com.beans.ShopItem;
 
 
-/**
- * Servlet implementation class menu
- */
-@WebServlet("/menu")
-public class history extends HttpServlet {
+@WebServlet(name="Shop", urlPatterns="/buyitem")
+public class Shop extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private HTTPDao mysqldao;  
-   
-    public history() {
+	private HTTPDao httpdao;        
+  
+    public Shop() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
-    
     public void init() throws ServletException{
     	DaoFactory daofactory = DaoFactory.getInstance();
-    	this.mysqldao = daofactory.getMysqlDao();
+    	this.httpdao = daofactory.getMysqlDao();
     	
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("username");
-		List<Game> Games = new ArrayList<Game>();
+		List<ShopItem> items = new ArrayList<ShopItem>();
 		try {
-			 Games = this.mysqldao.getHistorique(username);
+			items = this.httpdao.getShopItem();
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("games", Games);	
+		
+		request.setAttribute("Items", items);
 		if(username != null)
-			this.getServletContext().getRequestDispatcher("/WEB-INF/history.jsp").forward(request, response);
-		else 
+			this.getServletContext().getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
+		else {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+		}
+			
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
 	}
 
 }

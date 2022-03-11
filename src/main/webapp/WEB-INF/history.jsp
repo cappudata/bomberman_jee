@@ -1,21 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 <html>
 
 <head>
 <meta charset="UTF-8">
 <title>History</title>
 <link rel="stylesheet" type="text/css" href="css/history.css">
+<link rel="stylesheet" type="text/css" href="css/menu.css">
 
 </head>
 
 
 <body>
-
+<!-- <%@ include file="menu.jsp" %> -->
 <div class="menu">
 	<ul>
 		<li><a href="connected">Home</a></li>
-		<li><a href="bonjour">Store</a></li>
+		<li><a href="buyitem">Store</a></li>
 	</ul>
 </div>
 

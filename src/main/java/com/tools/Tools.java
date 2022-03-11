@@ -2,7 +2,7 @@ package com.tools;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,10 +22,9 @@ import javax.servlet.http.Part;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.beans.Game;
+import com.beans.ShopItem;
 import com.beans.Utilisateur;
 
 public class Tools {
@@ -63,31 +62,7 @@ public class Tools {
 	    }
 		
 		
-		public List<Game> recupererGames(String uname) {
-	        List<Game> games = new ArrayList<Game>();
-	        loadDatabase();	
-	        
-	        try {
-	            PreparedStatement preparedStatement = connexion.prepareStatement("SELECT idgame, username, status, nbr_player FROM games where username= ?;");
-	            preparedStatement.setString(1, uname);
-				
-	            resultat = preparedStatement.executeQuery();
-	            
-	            while (resultat.next()) {
-	                int idgame = resultat.getInt("idgame");
-	                String username = resultat.getString("username");
-	                String status = resultat.getString("status");
-	                int nbr_player = resultat.getInt("nbr_player");
-
-	                Game game = new Game();
-	                games.add(game);
-	            }
-	        } catch (SQLException e) {
-	        } finally {
-	        	closeDatabase();
-	        }
-	        return games;
-	    }
+	
 		
 	
 		
@@ -222,6 +197,29 @@ public class Tools {
 			}
 			
 			return Games;
+		}
+		public static List<ShopItem> toListOfItem(JSONArray array){
+			List<ShopItem> Items = new ArrayList<ShopItem>();
+			
+			for(Object obj : array) {
+				JSONObject json = (JSONObject) obj;
+				String name = (String)json.get("name");
+				String desc = (String)json.get("desc");
+				String image = (String)json.get("images");
+				double price = (double)json.get("price");
+				long rate = (long)json.get("rate");
+				
+				ShopItem item = new ShopItem();
+				item.setName(name);
+				item.setDescription(desc);
+				item.setImage(image);
+				item.setPrice((float)price);
+				item.setRate((int)rate);
+				
+				Items.add(item);
+			}
+			
+			return Items;
 		}
 		
 		public static String getPostStatus(String body) {

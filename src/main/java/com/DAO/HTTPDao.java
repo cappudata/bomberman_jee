@@ -8,18 +8,17 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.beans.Game;
+import com.beans.ShopItem;
 import com.beans.Utilisateur;
 import com.tools.Tools;
 
-public class MysqlDao implements DaoInterface {
+public class HTTPDao implements DaoInterface {
 	
 
 	@SuppressWarnings("unchecked")
@@ -71,7 +70,6 @@ public class MysqlDao implements DaoInterface {
 	            user.setPassword((String)paquet.get("password"));
 	            user.setProfilepic((String)paquet.get("profilepic"));
 	            user.setMail((String)paquet.get("mail"));
-	           
 	        }catch (IOException | InterruptedException e) {
 	        	throw new DaoException("Impossible de communiquer avec la base de données");
 	        } catch (ParseException e) {
@@ -186,5 +184,31 @@ public class MysqlDao implements DaoInterface {
 	        	throw new DaoException("Impossible de communiquer avec la base de données");
 	        }
 
+	}
+
+	@Override
+	public List<ShopItem> getShopItem() throws DaoException {
+		List<ShopItem> items = new ArrayList<ShopItem>();
+		try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest requests = HttpRequest.newBuilder()
+                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/shop"))
+                    .GET()
+                    .header("Accept", "application.json")
+                    .build();
+            HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
+            JSONParser parser = new JSONParser();
+            JSONObject paquet = (JSONObject)parser.parse(result.body());
+           
+            items = Tools.toListOfItem((JSONArray)paquet.get("listOfItem"));
+           
+            
+        }catch (IOException | InterruptedException e) {
+        	throw new DaoException("Impossible de communiquer avec la base de données");
+        } catch (ParseException e) {			
+        	throw new DaoException("Impossible de communiquer avec la base de données");
+		}
+		return items;
 	}
 }
