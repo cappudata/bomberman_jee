@@ -15,6 +15,7 @@ import com.DAO.DaoException;
 import com.DAO.DaoFactory;
 import com.DAO.HTTPDao;
 import com.beans.Game;
+import com.tools.Tools;
 
 
 /**
@@ -47,7 +48,12 @@ public class history extends HttpServlet {
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("games", Games);	
+		request.setAttribute("games", Games);
+		request.setAttribute("nbrm", Tools.getNombreMort(Games));
+		request.setAttribute("nbra", Tools.getNombreTue(Games));
+		request.setAttribute("egal", Tools.getPartieNulle(Games));
+		request.setAttribute("vict", Tools.getPartieGagne(Games));
+		request.setAttribute("lose", Tools.getPartiePerdu(Games));
 		if(username != null)
 			this.getServletContext().getRequestDispatcher("/WEB-INF/history.jsp").forward(request, response);
 		else 

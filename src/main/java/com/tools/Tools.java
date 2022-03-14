@@ -186,13 +186,16 @@ public class Tools {
 				JSONObject json = (JSONObject) obj;
 				long id = (long) json.get("idgame");
 				long nbrplayer = (long) json.get("nbrplayer");
+				long nbrm = (long) json.get("nbrm");
+				long nbra = (long) json.get("nbra");
 
 				Game game = new Game();
 				game.set_username((String)json.get("username"));
 				game.set_nbrplayer((int)nbrplayer);
 				game.set_idgame((int)id);
 				game.set_statusGame((String) json.get("gamestatus"));
-				
+				game.setAdversaireTue((int)nbra);
+				game.setNbre_mort((int)nbrm);
 				Games.add(game);				
 			}
 			
@@ -274,5 +277,51 @@ public class Tools {
 		        }
 			
 		}   
+		
+		public static int getNombreMort(List<Game> game) {
+			int nbr = 0 ;
+			for(Game jeu : game) {
+				nbr += jeu.getNbre_mort();
+			}
+			
+			return nbr;
+		}
+		
+		public static int getNombreTue(List<Game> game) {
+			int nbr = 0 ;
+			for(Game jeu : game) {
+				nbr += jeu.getAdversaireTue();
+			}
+			
+			return nbr;
+		}
+		
+		public static int getPartieGagne(List<Game> game) {
+			int nbr = 0 ;
+			for(Game jeu : game) {
+				if(jeu.get_statusGame().equals("VICTOIRE"))
+					++nbr;
+			}
+			
+			return nbr;
+		}
+		public static int getPartiePerdu(List<Game> game) {
+			int nbr = 0 ;
+			for(Game jeu : game) {
+				if(jeu.get_statusGame().equals("DEFAITE"))
+					++nbr;
+			}
+			
+			return nbr;
+		}
+		public static int getPartieNulle(List<Game> game) {
+			int nbr = 0 ;
+			for(Game jeu : game) {
+				if(jeu.get_statusGame().equals("EGALITE"))
+					++nbr;
+			}
+			
+			return nbr;
+		}
 		
 }

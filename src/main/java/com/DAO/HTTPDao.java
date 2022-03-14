@@ -20,7 +20,7 @@ import com.tools.Tools;
 
 public class HTTPDao implements DaoInterface {
 	
-
+	private final static String IP="172.18.93.221";
 	@SuppressWarnings("unchecked")
 	@Override
 	public void ajouterUtilisateur(Utilisateur user) throws DaoException {
@@ -35,7 +35,7 @@ public class HTTPDao implements DaoInterface {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest requests = HttpRequest.newBuilder()
-                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/user"))
+                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/user"))
                     .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
                     .build();
             HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
@@ -58,7 +58,7 @@ public class HTTPDao implements DaoInterface {
 	            HttpClient client = HttpClient.newHttpClient();
 
 	            HttpRequest requests = HttpRequest.newBuilder()
-	                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/user?name="+Identifiant))
+	                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/user?name="+Identifiant))
 	                    .GET()
 	                    .header("Accept", "application.json")
 	                    .build();
@@ -88,7 +88,7 @@ public class HTTPDao implements DaoInterface {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest requests = HttpRequest.newBuilder()
-                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/game?name="+User))
+                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/game?name="+User))
                     .GET()
                     .header("Accept", "application.json")
                     .build();
@@ -142,7 +142,7 @@ public class HTTPDao implements DaoInterface {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest requests = HttpRequest.newBuilder()
-                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/game"))
+                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/game"))
                     .POST(HttpRequest.BodyPublishers.ofString(jsonobject.toString()))
                     .build();
             HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
@@ -172,7 +172,7 @@ public class HTTPDao implements DaoInterface {
 	            HttpClient client = HttpClient.newHttpClient();
 
 	            HttpRequest requests = HttpRequest.newBuilder()
-	                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/user"))
+	                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/user"))
 	                    .PUT(HttpRequest.BodyPublishers.ofString(json.toString()))
 	                    .build();
 	            HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
@@ -193,7 +193,7 @@ public class HTTPDao implements DaoInterface {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest requests = HttpRequest.newBuilder()
-                    .uri(URI.create("http://192.168.0.20:8080/projet-bomberman-api/shop"))
+                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/shop"))
                     .GET()
                     .header("Accept", "application.json")
                     .build();

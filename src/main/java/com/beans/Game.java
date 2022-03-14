@@ -5,8 +5,25 @@ public class Game {
 	private String _username;
 	private String _statusGame;
 	private int _nbrplayer;
-	
+	private int adversaireTue;
+	private int nbre_mort;
 
+
+	public int getAdversaireTue() {
+		return adversaireTue;
+	}
+
+	public void setAdversaireTue(int adversaireTue) {
+		this.adversaireTue = adversaireTue;
+	}
+
+	public int getNbre_mort() {
+		return nbre_mort;
+	}
+
+	public void setNbre_mort(int nbre_mort) {
+		this.nbre_mort = nbre_mort;
+	}
 
 	// Getter et Setter
 	public int get_idgame() {
