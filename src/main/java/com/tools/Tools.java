@@ -211,8 +211,10 @@ public class Tools {
 				String image = (String)json.get("images");
 				double price = (double)json.get("price");
 				long rate = (long)json.get("rate");
+				long id = (long)json.get("id");
 				
 				ShopItem item = new ShopItem();
+				item.setId((int)id);
 				item.setName(name);
 				item.setDescription(desc);
 				item.setImage(image);

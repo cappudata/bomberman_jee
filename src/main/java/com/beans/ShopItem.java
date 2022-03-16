@@ -1,6 +1,7 @@
 package com.beans;
 
 public class ShopItem {
+	private int id;
 	private String name;
 	private String description;
 	private String image;
@@ -36,6 +37,12 @@ public class ShopItem {
 	}
 	public void setRate(int rate) {
 		this.rate = rate;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

@@ -20,7 +20,7 @@ import com.tools.Tools;
 
 public class HTTPDao implements DaoInterface {
 	
-	private final static String IP="172.18.93.221";
+	private final static String IP="172.21.0.1";
 	@SuppressWarnings("unchecked")
 	@Override
 	public void ajouterUtilisateur(Utilisateur user) throws DaoException {
@@ -204,11 +204,68 @@ public class HTTPDao implements DaoInterface {
             items = Tools.toListOfItem((JSONArray)paquet.get("listOfItem"));
            
             
-        }catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
         	throw new DaoException("Impossible de communiquer avec la base de données");
         } catch (ParseException e) {			
         	throw new DaoException("Impossible de communiquer avec la base de données");
 		}
 		return items;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void ajouterItem(String username, int iditem) throws DaoException {
+	
+		
+		try {
+			JSONObject json = new JSONObject();
+			json.put("username", username);
+			json.put("iditem", iditem);
+			
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest requests = HttpRequest.newBuilder()
+					.uri(URI.create("http://"+IP+":8080/projet-bomberman-api/shop"))
+					.POST(HttpRequest.BodyPublishers.ofString(json.toString()))
+					.build();
+			
+	       HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
+           String body = result.toString();
+           
+           
+           if(!Tools.getPostStatus(body).equals("200")) {
+        	   throw new DaoException("Une erreur est survenue !");
+           }
+       } catch (IOException | InterruptedException e) {
+       		throw new DaoException("Impossible de communiquer avec la base de données");
+       }		
+	}
+	
+	
+	public float getBomcoin(String username) throws DaoException {
+		float bomcoin = 0;
+		
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest requests = HttpRequest.newBuilder()
+					.uri(URI.create("http://"+IP+":8080/projet-bomberman-api/bomcoin?name="+username))
+					.GET()
+                    .header("Accept", "application.json")
+                    .build();
+			
+	         HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
+	         JSONParser parser = new JSONParser();
+	         JSONObject paquet = (JSONObject)parser.parse(result.body());
+	            	         
+	        double bomcoin_double = (double)paquet.get("bomcoin");
+	        bomcoin = (float)bomcoin_double;
+	         
+         } catch (IOException | InterruptedException e) {
+         	throw new DaoException("Impossible de communiquer avec la base de données");
+         } catch (ParseException e) {			
+         	throw new DaoException("Impossible de communiquer avec la base de données");
+ 		}
+		
+		return bomcoin;
+		
 	}
 }

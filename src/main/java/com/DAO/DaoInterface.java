@@ -15,4 +15,6 @@ public interface DaoInterface {
 	public void addGame(Game game) throws DaoException; 
 	public void updateUser(Utilisateur user) throws DaoException;
 	public List<ShopItem> getShopItem() throws DaoException;
+	public void ajouterItem(String username, int iditem) throws DaoException;
+	public float getBomcoin(String username) throws DaoException;
 }

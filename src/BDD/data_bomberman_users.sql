@@ -7,6 +7,7 @@ CREATE TABLE users (
     password VARCHAR(200) NOT NULL,
     mail VARCHAR(200),
     profilepic VARCHAR(200),
+    bomcoin FLOAT,
     PRIMARY KEY (userid)
 ) ENGINE = INNODB;
 

@@ -43,6 +43,7 @@ public class Shop extends HttpServlet {
 		}
 		
 		request.setAttribute("Items", items);
+		
 		if(username != null)
 			this.getServletContext().getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 		else {
@@ -52,7 +53,42 @@ public class Shop extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String iditem_String = request.getParameter("item_game");
+		String itemPrice_String = request.getParameter("item_price");
 		
+		int iditem = Integer.parseInt(iditem_String);  
+		float itemPrice = Float.parseFloat(itemPrice_String);
+		
+		float bomcoin = 0;
+		String message = "";
+		
+		try {
+			bomcoin = this.httpdao.getBomcoin(username);
+			if (bomcoin > 0 && bomcoin >= itemPrice) {
+				this.httpdao.ajouterItem(username, iditem);
+				message = "Votre achat a été bien effectué";
+			} else {
+				message = "Vous n'avez pas assez de bomcoin";
+			}
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		List<ShopItem> items = new ArrayList<ShopItem>();
+		try {
+			items = this.httpdao.getShopItem();
+			request.setAttribute("buy_message",message);
+		} catch (DaoException e) {
+			request.setAttribute("buy_message",e.getMessage());
+		}
+		
+		request.setAttribute("Items", items);
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 	}
 
 }
