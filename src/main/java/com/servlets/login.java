@@ -33,7 +33,8 @@ public class login extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String redirect = request.getParameter("redirect");
+		request.setAttribute("redirect", redirect);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 
@@ -42,16 +43,18 @@ public class login extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String userpass = request.getParameter("password");
-		
-		
-		
+		String redirect = request.getParameter("redirect");;
+		System.out.println(redirect);
 		
 		try {
 			if (this.mysqldao.verifierAccount(username, userpass)) {
 				// session pour stocker les un utilisateur
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
-				this.getServletContext().getRequestDispatcher("/WEB-INF/connected.jsp").forward(request, response);
+				if(redirect != null && !redirect.isEmpty())
+					response.sendRedirect(redirect);
+				else
+					response.sendRedirect("connected");
 			} else {
 				
 				throw new DaoException("Username or password is not correct");
@@ -59,9 +62,6 @@ public class login extends HttpServlet {
 		} catch (DaoException e) {
 			request.setAttribute("erreur", e.getMessage());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

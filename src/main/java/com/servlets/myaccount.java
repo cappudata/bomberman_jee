@@ -1,6 +1,9 @@
 package com.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +16,7 @@ import javax.servlet.http.Part;
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
 import com.DAO.HTTPDao;
+import com.beans.ShopItem;
 import com.beans.Utilisateur;
 import com.tools.Tools;
 import com.tools.VerifierFormulaireInscription;
@@ -52,9 +56,33 @@ public class myaccount extends HttpServlet {
 		if(username != null) {
 			try {
 				Utilisateur user = this.mysqldao.getUserByID(username);
+				float coins = this.mysqldao.getBomcoin(username);
+				List<ShopItem> Useritems = this.mysqldao.getUserItem(username);
+				//categorisation 
+				List<ShopItem> wall = new ArrayList<ShopItem>();
+				List<ShopItem> wallEx = new ArrayList<ShopItem>();
+				List<ShopItem> map = new ArrayList<ShopItem>();
+				List<ShopItem> all = new ArrayList<ShopItem>();
+				for(ShopItem item : Useritems) {
+					if(item.getCategorie().equals("WALL"))
+						wall.add(item);
+					else if(item.getCategorie().equals("WALL EXT"))
+						wallEx.add(item);
+					else if(item.getCategorie().equals("MAP"))
+						map.add(item);
+					else
+						all.add(item);
+						
+				}
+				
 				if(user.getMail() == null)
 					user.setMail("");
 				request.setAttribute("user", user);
+				request.setAttribute("coins", coins);
+				request.setAttribute("wall", wall);
+				request.setAttribute("wallEx", wallEx);
+				request.setAttribute("map", map);
+				request.setAttribute("all", all);
 			} catch (DaoException e) {
 				
 				e.printStackTrace();
@@ -63,7 +91,7 @@ public class myaccount extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/myaccount.jsp").forward(request, response);
 		}		
 		else 
-			this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+			response.sendRedirect("login?redirect=myaccount");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -106,8 +134,9 @@ public class myaccount extends HttpServlet {
 				try {
 					
 					this.mysqldao.updateUser(user);
+					request.setAttribute("message", "vos données ont bien été mises à jour ");
 				} catch (DaoException e) {
-					
+					request.setAttribute("message", e.getMessage());
 					e.printStackTrace();
 				}
 			}

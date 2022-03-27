@@ -15,6 +15,7 @@ import com.DAO.DaoException;
 import com.DAO.DaoFactory;
 import com.DAO.HTTPDao;
 import com.beans.ShopItem;
+import com.tools.Tools;
 
 
 @WebServlet(name="Shop", urlPatterns="/buyitem")
@@ -47,7 +48,7 @@ public class Shop extends HttpServlet {
 		if(username != null)
 			this.getServletContext().getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 		else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+			response.sendRedirect("login?redirect=buyitem");
 		}
 			
 	}
@@ -65,13 +66,20 @@ public class Shop extends HttpServlet {
 		String message = "";
 		
 		try {
-			bomcoin = this.httpdao.getBomcoin(username);
-			if (bomcoin > 0 && bomcoin >= itemPrice) {
-				this.httpdao.ajouterItem(username, iditem);
-				message = "Votre achat a été bien effectué";
-			} else {
-				message = "Vous n'avez pas assez de bomcoin";
+			List<ShopItem> Useritems = this.httpdao.getUserItem(username);
+			if(!Tools.userNotHasItem(Useritems,iditem)) {
+				bomcoin = this.httpdao.getBomcoin(username);
+				if (bomcoin > 0 && bomcoin >= itemPrice) {
+					this.httpdao.ajouterItem(username, iditem);
+					message = "Votre achat a été bien effectué";
+				} else {
+					message = "Vous n'avez pas assez de bomcoin";
+				}
 			}
+			else {
+				message = "vous possedez d�j� cet item";
+			}
+			
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}

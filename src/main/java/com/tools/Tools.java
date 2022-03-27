@@ -18,6 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import org.json.simple.JSONArray;
@@ -209,6 +210,8 @@ public class Tools {
 				String name = (String)json.get("name");
 				String desc = (String)json.get("desc");
 				String image = (String)json.get("images");
+				String cat = (String)json.get("categorie");
+				boolean usage =  json.get("usage") == null ? false : (boolean)json.get("usage");
 				double price = (double)json.get("price");
 				long rate = (long)json.get("rate");
 				long id = (long)json.get("id");
@@ -220,7 +223,8 @@ public class Tools {
 				item.setImage(image);
 				item.setPrice((float)price);
 				item.setRate((int)rate);
-				
+				item.setCategorie(cat);
+				item.setInUsage(usage);
 				Items.add(item);
 			}
 			
@@ -324,6 +328,48 @@ public class Tools {
 			}
 			
 			return nbr;
+		}
+
+
+
+
+
+
+
+		public static boolean userNotHasItem(List<ShopItem> useritems,int id) {
+			for(ShopItem item : useritems) {
+				if (item.getId() == id)
+					return true;
+			}
+			return false;
+		}
+
+
+
+
+
+
+
+		@SuppressWarnings("unchecked")
+		public static JSONObject getSkinSelected(HttpServletRequest request) {
+			JSONObject obj = new JSONObject();
+			String all = request.getParameter("all");
+			if(all != null) {
+				obj.put("all", Integer.parseInt(all));
+				
+			}
+			else {
+				obj.put("all", null);
+				String map = request.getParameter("map");
+				String wallEx = request.getParameter("wallEx");
+				String wall = request.getParameter("wall");
+				
+				obj.put("map", map);
+				obj.put("wall", wall);
+				obj.put("wallEx", wallEx);
+			}
+			
+			return obj;
 		}
 		
 }

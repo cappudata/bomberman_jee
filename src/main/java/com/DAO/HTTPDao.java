@@ -1,5 +1,6 @@
 package com.DAO;
 
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -17,10 +18,12 @@ import com.beans.Game;
 import com.beans.ShopItem;
 import com.beans.Utilisateur;
 import com.tools.Tools;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class HTTPDao implements DaoInterface {
 	
-	private final static String IP="172.21.0.1";
+	//Dotenv env = Dotenv.load();
+	private final static String IP="172.18.93.221";
 	@SuppressWarnings("unchecked")
 	@Override
 	public void ajouterUtilisateur(Utilisateur user) throws DaoException {
@@ -54,6 +57,9 @@ public class HTTPDao implements DaoInterface {
 	@Override
 	public Utilisateur getUserByID(String Identifiant) throws DaoException  {
 		    Utilisateur user = new Utilisateur();
+		    Dotenv env =  Dotenv.configure()
+		    		  .directory("C:/Users/arist/Documents/Bomberman_JEE/bomberman-with-vi/conf")
+		    		  .load();
 		    try {
 	            HttpClient client = HttpClient.newHttpClient();
 
@@ -261,11 +267,61 @@ public class HTTPDao implements DaoInterface {
 	         
          } catch (IOException | InterruptedException e) {
          	throw new DaoException("Impossible de communiquer avec la base de données");
-         } catch (ParseException e) {			
+         } catch (ParseException e) {
+        	 e.printStackTrace();
          	throw new DaoException("Impossible de communiquer avec la base de données");
  		}
 		
 		return bomcoin;
+		
+	}
+
+	@Override
+	public List<ShopItem> getUserItem(String username) throws DaoException {
+		 List<ShopItem> UserItems = new ArrayList<ShopItem>();
+		 try {
+	            HttpClient client = HttpClient.newHttpClient();
+
+	            HttpRequest requests = HttpRequest.newBuilder()
+	                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/userItem?name="+username))
+	                    .GET()
+	                    .header("Accept", "application.json")
+	                    .build();
+	            HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
+	            JSONParser parser = new JSONParser();
+	            JSONObject paquet = (JSONObject)parser.parse(result.body());
+	           
+	            UserItems = Tools.toListOfItem((JSONArray)paquet.get("listOfItem"));
+	           
+	            
+	        } catch (IOException | InterruptedException e) {
+	        	throw new DaoException("Impossible de communiquer avec la base de données");
+	        } catch (ParseException e) {	
+	        	e.printStackTrace();
+	        	throw new DaoException("Impossible de communiquer avec la base de données");
+			}
+		 
+		return UserItems;
+	}
+
+	@Override
+	public void udpdateSkin(JSONObject obj) throws DaoException {
+		 try {
+
+	            HttpClient client = HttpClient.newHttpClient();
+
+	            HttpRequest requests = HttpRequest.newBuilder()
+	                    .uri(URI.create("http://"+IP+":8080/projet-bomberman-api/userItem"))
+	                    .PUT(HttpRequest.BodyPublishers.ofString(obj.toString()))
+	                    .build();
+	            HttpResponse<String> result = client.send(requests, HttpResponse.BodyHandlers.ofString());
+	            String body = result.toString();
+	            if(!Tools.getPostStatus(body).equals("200")) {
+	            	throw new DaoException("Une erreur est survenue !");
+	            }
+	        }catch (IOException | InterruptedException e) {
+	        	throw new DaoException("Impossible de communiquer avec la base de données");
+	        }
 		
 	}
 }

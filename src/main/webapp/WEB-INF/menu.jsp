@@ -17,6 +17,7 @@
 				<li><a class="menu_item" href="history">Historique</a></li>
 				<li><a class="menu_item" href="buyitem">Shop</a></li>
 				<li><a class="menu_item" href="myaccount">Mon compte</a></li>
+				<li><a class="menu_item" href="logout">DEconnexion</a></li>
 			</ul>
 	
 		</nav>

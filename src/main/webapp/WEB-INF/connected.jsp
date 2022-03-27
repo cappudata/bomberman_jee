@@ -27,6 +27,7 @@
 	  <li><h1><a href="myaccount">My account</a></h1></li>
 	  <li><h1><a href="history">History</a></h1></li>
 	  <li><h1><a href="buyitem">Store</a></h1></li>
+	  <li><h1><a href="logout">Deconnexion</a></h1></li>
 	</ul>
 </div>
 

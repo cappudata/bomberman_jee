@@ -7,6 +7,19 @@ public class ShopItem {
 	private String image;
 	private float price;
 	private int rate;
+	private String Categorie;
+	private boolean inUsage;
+	
+
+	
+	
+	public boolean isInUsage() {
+		return inUsage;
+	}
+	public void setInUsage(boolean inUsage) {
+		this.inUsage = inUsage;
+	}
+	
 	
 	public String getName() {
 		return name;
@@ -43,6 +56,12 @@ public class ShopItem {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getCategorie() {
+		return Categorie;
+	}
+	public void setCategorie(String categorie) {
+		Categorie = categorie;
 	}
 	
 	

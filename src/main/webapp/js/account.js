@@ -1,3 +1,4 @@
+
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
@@ -58,3 +59,34 @@ file.addEventListener("click", function(){
 	let res = document.getElementById("reset");
 	res.hidden = false;
 },false);
+
+////////////////////////////////////////////////////////////////////
+var allrdbtn = document.querySelectorAll(".rdbtn");
+for(var  i =0 ; i < allrdbtn.length ; ++i){
+	allrdbtn[i].addEventListener("click", function(){
+		let sub = document.getElementById("sub1");
+	sub.hidden = false;
+	},false);
+}
+
+var other = document.querySelectorAll(".other");
+for(var  i =0 ; i < other.length ; ++i){
+	other[i].addEventListener("click", function(){
+		let all = document.querySelectorAll(".all");
+		for(var  j =0 ; j < all.length ; ++j){
+			all[j].checked = false;
+		}
+
+	},false);
+}
+
+var all = document.querySelectorAll(".all");
+for(var  i =0 ; i < all.length ; ++i){
+	all[i].addEventListener("click", function(){
+		let other = document.querySelectorAll(".other");
+		for(var  j =0 ; j < other.length ; ++j){
+			other[j].checked = false;
+		}
+
+	},false);
+}

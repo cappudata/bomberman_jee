@@ -16,19 +16,23 @@
 <div class="div_history">
 		<div class="stats">
 			<div>
-				<p>nombre de partie gagnant: <span id="vict"><c:out value="${vict}" /></span></p>
-				<p>nombre de partie perdue: <span id="lose"><c:out value="${lose}" /></span></p>
-				<p>nombre de partie à égalité: <span id="egal"><c:out value="${egal}" /></span></p>
-				<p>Kill: <span id="nbra"><c:out value="${nbra}" /></span></p>
-				<p>Mort: <span id="nbrm"><c:out value="${nbrm}" /></span></p>
+				<p class="title">Mes Stats</p>
+				<p class="label">nombre de partie gagnant: <span id="vict"><c:out value="${vict}" /></span></p>
+				<p class="label">nombre de partie perdue: <span id="lose"><c:out value="${lose}" /></span></p>
+				<p class="label">nombre de partie à égalité: <span id="egal"><c:out value="${egal}" /></span></p>
+				
 			</div>
 			<div>
 				<canvas id="graphique1">
 					
 				</canvas>
 			</div>
+			<p class="label">Kill: <span id="nbra"><c:out value="${nbra}" /></span></p>
+			<p class="label">Mort: <span id="nbrm"><c:out value="${nbrm}" /></span></p>
 		</div>
-		
+		<div class="image_bomberman">
+			<img class="bomberman" src="images/p1.png" alt="bomberman">
+		</div>
 		<div class="historique">
 				<p class="title">HISTORIQUE</p>
 				<table class="table_hist">
@@ -47,9 +51,7 @@
 					</c:forEach>	
 				</table>
 		</div>
-		<div class="image_bomberman">
-			<img class="bomberman" src="images/p1.png" alt="bomberman">
-		</div>
+
 
 </div>
 

@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS items ;
 CREATE TABLE items (
     id INT NOT NULL AUTO_INCREMENT,
     idproduct INT NOT NULL,
-    username VARCHAR(32) NOT NULL, 
+    username VARCHAR(32) NOT NULL,
+    itemusing BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (id),
-    FOREIGN KEY(idproduct) REFERENCES shop(idproduct),
-    FOREIGN KEY(idproduct) REFERENCES shop(idproduct),
+    FOREIGN KEY(idproduct) REFERENCES shop(idproduct) ON DELETE CASCADE
 ) ENGINE = INNODB;

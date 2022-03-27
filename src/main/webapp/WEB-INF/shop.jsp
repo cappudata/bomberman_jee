@@ -11,11 +11,11 @@
 </head>
 <body>
 <%@ include file="menu.jsp" %>
-<c:if test="${ !empty buy_message }">	
-		<div class="alert alert-danger" role="alert">
-			<c:out value="${ buy_message }" />
+	<c:if test="${ !empty buy_message }">	
+		<div class="by_message" role="alert">
+			<span><c:out value="${ buy_message }" /></span>
 	 	</div>	
-</c:if>
+	</c:if>
 
 <div class="div_shop">
 		<c:forEach var="item" items="${ Items }">

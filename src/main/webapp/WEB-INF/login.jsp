@@ -33,6 +33,7 @@
 				</div>
 
 				<form method="post" action="login" class="login100-form validate-form">
+					<input type="hidden" name="redirect" value="${redirect}"/>
 					<span class="login100-form-title">
 						Player Login
 					</span>

@@ -1,9 +1,6 @@
 package com.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,58 +8,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.DAO.DaoException;
 import com.DAO.DaoFactory;
 import com.DAO.HTTPDao;
-import com.beans.Game;
 import com.tools.Tools;
 
-
 /**
- * Servlet implementation class menu
+ * Servlet implementation class manageSkin
  */
-@WebServlet("/menu")
-public class history extends HttpServlet {
+@WebServlet(name="manageSkin", urlPatterns="/manageskin")
+public class manageSkin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HTTPDao mysqldao;  
-   
-    public history() {
+	
+    public manageSkin() {
         super();
         // TODO Auto-generated constructor stub
     }
-    
+
     public void init() throws ServletException{
     	DaoFactory daofactory = DaoFactory.getInstance();
     	this.mysqldao = daofactory.getMysqlDao();
     	
     }
-	
+    
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute("username");
-		List<Game> Games = new ArrayList<Game>();
-		try {
-			 Games = this.mysqldao.getHistorique(username);
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		request.setAttribute("games", Games);
-		request.setAttribute("nbrm", Tools.getNombreMort(Games));
-		request.setAttribute("nbra", Tools.getNombreTue(Games));
-		request.setAttribute("egal", Tools.getPartieNulle(Games));
-		request.setAttribute("vict", Tools.getPartieGagne(Games));
-		request.setAttribute("lose", Tools.getPartiePerdu(Games));
-		if(username != null)
-			this.getServletContext().getRequestDispatcher("/WEB-INF/history.jsp").forward(request, response);
-		else 
-			response.sendRedirect("login?redirect=history");
+		response.sendRedirect("myaccount");
 	}
 
-
+	
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		JSONObject obj = Tools.getSkinSelected(request);
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		obj.put("username",username);
+		
+		try {
+			this.mysqldao.udpdateSkin(obj);
+			
+		} catch (DaoException e) {
+			
+			e.printStackTrace();
+		}
+		response.sendRedirect("myaccount");
 	}
 
 }
