@@ -23,7 +23,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class HTTPDao implements DaoInterface {
 	
 	//Dotenv env = Dotenv.load();
-	private final static String IP="172.18.93.221";
+	private final static String IP="192.168.0.20";
 	@SuppressWarnings("unchecked")
 	@Override
 	public void ajouterUtilisateur(Utilisateur user) throws DaoException {

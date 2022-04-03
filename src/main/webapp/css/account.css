@@ -280,6 +280,18 @@ input[type="file"] {
   border-radius: 50%;
 }
 
+  .by_message {
+  		margin : 0 auto;
+  		width : 20%;
+  		background-color:#004085;
+  		background-color: #cce5ff;
+    	border-color: #b8daff;
+  		height: 50px;
+  		display: flex;
+  		justify-content: center;
+	  	align-items: center;
+  }
+
 @keyframes click-wave {
   0% {
     height: 40px;

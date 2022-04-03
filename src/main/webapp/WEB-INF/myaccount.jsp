@@ -114,7 +114,7 @@
 				<c:if test="${ !empty erreur }">	
 					<div class="alert alert-danger" role="alert">
 						<c:out value="${ erreur }" />
-						 </div>	
+					</div>	
 				</c:if>
 				<div class="money">
 					<span class="mycoins">Mes coins : ${coins } <i class="fa fa-btc" aria-hidden="true" ></i> </span>
